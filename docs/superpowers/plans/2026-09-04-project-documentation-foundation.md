@@ -462,17 +462,17 @@ rg -n 'CONTEXT\.md|docs/architecture\.md' AGENTS.md
 rg -n 'Case definition|Teaching parameter|Ephemeral state|Device preference' CONTEXT.md
 rg -n 'Case extension point|Presentation state flow|Where new behavior goes|Dependency direction' docs/architecture.md
 ! rg -n 'T[B]D|T[O]DO|F[I]XME|X[X]X' AGENTS.md CONTEXT.md docs/architecture.md
-git diff --check HEAD~3..HEAD
+git diff --check 07faefe..HEAD
 git status --short
 ```
 
 Expected: all assertions pass, required terms and links are printed, no placeholder matches are printed, `git diff --check` prints nothing, and `git status --short` prints nothing.
 
-- [ ] **Step 2: Inspect the three implementation commits**
+- [ ] **Step 2: Inspect the feature implementation commits**
 
 ```sh
-git log -3 --oneline --decorate
-git show --stat --oneline HEAD~2..HEAD
+git log --oneline --decorate 07faefe..HEAD
+git show --stat --oneline 07faefe..HEAD
 ```
 
-Expected: three focused commits appear in order for domain context, architecture, and Agent guidance; their file sets match the tasks above.
+Expected: focused commits appear in order for domain context, architecture, the approved access-rule clarification, and Agent guidance; their file sets match the tasks above.
