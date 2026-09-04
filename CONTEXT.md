@@ -8,7 +8,7 @@ Mathematical clarity, classroom readability, and avoiding misleading representat
 
 ## Users and classroom setting
 
-The primary user is a primary-school mathematics teacher. The teacher finds and prepares a case, then controls it during class. Students primarily watch and may interact directly with the shared teaching display. The primary hardware target is a teacher computer connected to a 16:9 projector or teaching display. Pointer and touch are first-class inputs, and key actions must also be usable with a keyboard.
+The primary user is a primary-school mathematics teacher. The teacher finds and prepares a case, then controls it during class. Students primarily watch and may interact directly with the shared teaching display. The primary hardware target is a teacher computer connected to a 16:9 projector or teaching display. Pointer and touch are first-class inputs, and key actions must also be usable with a keyboard. Phones receive a functional fallback, but complex demonstrations are not optimized for small screens.
 
 ## Domain vocabulary
 

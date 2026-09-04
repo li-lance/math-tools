@@ -38,13 +38,15 @@ pnpm test:e2e
 
 ## Engineering rules
 
+- Pin the stable Node LTS selected during application scaffolding. Do not claim a version before it is selected.
 - Use TypeScript strict mode. Avoid `any`; validate data at URL, persistence, and other untyped boundaries.
 - Keep mathematical logic independent of React and rendering wherever practical.
 - Use SVG for ordinary 2D diagrams, Canvas for dense continuous drawing, and React Three Fiber for Three.js scenes.
 - Introduce a shared abstraction only after multiple real cases demonstrate the same stable need.
 - Preserve the modular-monolith dependency direction documented in `docs/architecture.md`.
 - Keep simplified-Chinese interface copy and classification terms in `src/content/`, not scattered through application components.
-- Cases must not directly access the network, router, global state, browser persistence, or service worker, including reads or writes; they must use typed application-owned interfaces for permitted behavior.
+- Cases do not make network requests.
+- Cases may not directly access the router or routing, global state, browser persistence, or service worker, including reads or writes. Permitted shell behavior uses typed application-owned interfaces.
 - Design key interactions for pointer, touch, and keyboard. Do not use color as the only carrier of mathematical meaning.
 - Prefer mathematical clarity and classroom readability over decorative effects.
 

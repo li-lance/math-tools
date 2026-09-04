@@ -18,7 +18,8 @@
 - The first release requires no account or backend and collects no usage analytics, cookies, or student data.
 - The first release uses simplified Chinese and general mainland-China primary-school mathematics terminology.
 - Pointer and touch are first-class inputs; keyboard access is required for key actions.
-- Cases may not directly access the network, routing, global state, browser persistence, or the service worker, including reads or writes; they must use typed application-owned interfaces for permitted behavior.
+- Cases do not make network requests.
+- Cases may not directly access the router or routing, global state, browser persistence, or the service worker, including reads or writes; permitted shell behavior uses typed application-owned interfaces.
 - Do not claim that pnpm application commands work before the application scaffold exists.
 - Preserve the existing Issue tracker, Triage labels, and Domain docs sections in `AGENTS.md`.
 - Preserve `CLAUDE.md` as a symbolic link to `AGENTS.md`.
@@ -62,7 +63,7 @@ Mathematical clarity, classroom readability, and avoiding misleading representat
 
 ## Users and classroom setting
 
-The primary user is a primary-school mathematics teacher. The teacher finds and prepares a case, then controls it during class. Students primarily watch and may interact directly with the shared teaching display. The primary hardware target is a teacher computer connected to a 16:9 projector or teaching display. Pointer and touch are first-class inputs, and key actions must also be usable with a keyboard.
+The primary user is a primary-school mathematics teacher. The teacher finds and prepares a case, then controls it during class. Students primarily watch and may interact directly with the shared teaching display. The primary hardware target is a teacher computer connected to a 16:9 projector or teaching display. Pointer and touch are first-class inputs, and key actions must also be usable with a keyboard. Phones receive a functional fallback, but complex demonstrations are not optimized for small screens.
 
 ## Domain vocabulary
 
@@ -134,6 +135,7 @@ Run:
 ```sh
 rg -n '^## (Product mission|Users and classroom setting|Domain vocabulary|Product experience|First milestone|Product rules|Quality principles|Non-goals for the first release)$' CONTEXT.md
 rg -n '^### (Case|Case definition|Teaching parameter|Ephemeral state|Device preference)$' CONTEXT.md
+rg -n 'Phones receive a functional fallback.*not optimized for small screens' CONTEXT.md
 ! rg -n 'T[B]D|T[O]DO|F[I]XME|X[X]X' CONTEXT.md
 git diff --check -- CONTEXT.md
 ```
@@ -186,6 +188,8 @@ Read `CONTEXT.md` first for product vocabulary and rules. This document describe
 
 Math Tools is a modular React monolith with one build, router, application shell, PWA, and design system. Developer-authored cases are isolated modules behind a shared case-definition interface. The application provides explicit extension points without introducing a general plugin runtime or universal visualization DSL.
 
+The approved tooling is TypeScript, React, Vite, pnpm, Vitest, Testing Library, Playwright, and Three.js through React Three Fiber. Application scaffolding pins a stable Node LTS.
+
 ## Source layout
 
 ```text
@@ -229,11 +233,11 @@ The stage occupies most of the viewport. A touch-friendly bottom bar provides ba
 
 ## Offline delivery
 
-The output is a static PWA deployable to GitHub Pages under a configurable repository base path. The service worker caches same-origin versioned application assets and built-in case resources. A successful initial visit enables later offline use. Update handling prevents incompatible asset versions from being silently mixed and offers a controlled refresh.
+The output is a static PWA deployable to GitHub Pages under a configurable repository base path. The service worker caches same-origin versioned application assets and built-in case resources. A successful initial visit enables later offline use. There is no runtime API dependency. Update handling prevents incompatible asset versions from being silently mixed and offers a controlled refresh.
 
 ## Failure handling
 
-The application shell handles boot and routing failures. Each case has a local error boundary so one failure cannot break the library or other cases. Invalid external URL values do not reach mathematical logic unchecked. Recovery UI is in Chinese and offers retry when meaningful, reset to defaults, or return to the library. Never silently display a mathematically misleading fallback.
+The application shell handles boot and routing failures. Each case has a local error boundary so one failure cannot break the library or other cases. Invalid external URL values do not reach mathematical logic unchecked. Recovery UI is in Chinese and offers retry when meaningful, reset to defaults, or return to the library. Offline recovery distinguishes a resource that was never cached from a case runtime failure. Never silently display a mathematically misleading fallback or expose stack traces to teachers.
 
 ## Accessibility and classroom visibility
 
@@ -273,7 +277,7 @@ Run:
 
 ```sh
 rg -n '^## (System shape|Source layout|Case extension point|Rendering choices|Presentation state flow|Presentation shell|Offline delivery|Failure handling|Accessibility and classroom visibility|Testing|Where new behavior goes|Dependency direction)$' docs/architecture.md
-rg -n 'do not make network requests|dynamically imports|GitHub Pages|local error boundary|URL round trips' docs/architecture.md
+rg -n 'TypeScript, React, Vite, pnpm, Vitest, Testing Library, Playwright|stable Node LTS|do not make network requests|dynamically imports|GitHub Pages|no runtime API dependency|never cached|stack traces to teachers|local error boundary|URL round trips' docs/architecture.md
 ! rg -n 'T[B]D|T[O]DO|F[I]XME|X[X]X' docs/architecture.md
 git diff --check -- docs/architecture.md
 ```
@@ -362,13 +366,15 @@ pnpm test:e2e
 
 ## Engineering rules
 
+- Pin the stable Node LTS selected during application scaffolding. Do not claim a version before it is selected.
 - Use TypeScript strict mode. Avoid `any`; validate data at URL, persistence, and other untyped boundaries.
 - Keep mathematical logic independent of React and rendering wherever practical.
 - Use SVG for ordinary 2D diagrams, Canvas for dense continuous drawing, and React Three Fiber for Three.js scenes.
 - Introduce a shared abstraction only after multiple real cases demonstrate the same stable need.
 - Preserve the modular-monolith dependency direction documented in `docs/architecture.md`.
 - Keep simplified-Chinese interface copy and classification terms in `src/content/`, not scattered through application components.
-- Cases must not directly access the network, router, global state, browser persistence, or service worker, including reads or writes; they must use typed application-owned interfaces for permitted behavior.
+- Cases do not make network requests.
+- Cases may not directly access the router or routing, global state, browser persistence, or service worker, including reads or writes. Permitted shell behavior uses typed application-owned interfaces.
 - Design key interactions for pointer, touch, and keyboard. Do not use color as the only carrier of mathematical meaning.
 - Prefer mathematical clarity and classroom readability over decorative effects.
 
@@ -402,6 +408,7 @@ test "$(readlink CLAUDE.md)" = 'AGENTS.md'
 test "$(rg -c '^## Agent skills$' AGENTS.md)" = '1'
 rg -n '^## (Project stage|Intended repository layout|Intended commands|Engineering rules|Case changes|Verification|Documentation|Agent skills)$' AGENTS.md
 rg -n 'docs/agents/(issue-tracker|triage-labels|domain)\.md' AGENTS.md
+rg -n 'Pin the stable Node LTS selected during application scaffolding|Cases do not make network requests|Cases may not directly access the router or routing.*typed application-owned interfaces' AGENTS.md
 ! rg -n 'T[B]D|T[O]DO|F[I]XME|X[X]X' AGENTS.md CONTEXT.md docs/architecture.md
 git diff --check -- AGENTS.md CONTEXT.md docs/architecture.md
 ```
@@ -459,8 +466,10 @@ test -f docs/agents/triage-labels.md
 test -f docs/agents/domain.md
 test "$(rg -c '^## Agent skills$' AGENTS.md)" = '1'
 rg -n 'CONTEXT\.md|docs/architecture\.md' AGENTS.md
+rg -n 'Pin the stable Node LTS selected during application scaffolding|Cases do not make network requests|Cases may not directly access the router or routing.*typed application-owned interfaces' AGENTS.md
 rg -n 'Case definition|Teaching parameter|Ephemeral state|Device preference' CONTEXT.md
-rg -n 'Case extension point|Presentation state flow|Where new behavior goes|Dependency direction' docs/architecture.md
+rg -n 'Phones receive a functional fallback.*not optimized for small screens' CONTEXT.md
+rg -n 'TypeScript, React, Vite, pnpm, Vitest, Testing Library, Playwright|stable Node LTS|no runtime API dependency|never cached|stack traces to teachers|Case extension point|Presentation state flow|Where new behavior goes|Dependency direction' docs/architecture.md
 ! rg -n 'T[B]D|T[O]DO|F[I]XME|X[X]X' AGENTS.md CONTEXT.md docs/architecture.md
 git diff --check 07faefe..HEAD
 git status --short

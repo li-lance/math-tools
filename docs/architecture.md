@@ -6,6 +6,8 @@ Read `CONTEXT.md` first for product vocabulary and rules. This document describe
 
 Math Tools is a modular React monolith with one build, router, application shell, PWA, and design system. Developer-authored cases are isolated modules behind a shared case-definition interface. The application provides explicit extension points without introducing a general plugin runtime or universal visualization DSL.
 
+The approved tooling is TypeScript, React, Vite, pnpm, Vitest, Testing Library, Playwright, and Three.js through React Three Fiber. Application scaffolding pins a stable Node LTS.
+
 ## Source layout
 
 ```text
@@ -49,11 +51,11 @@ The stage occupies most of the viewport. A touch-friendly bottom bar provides ba
 
 ## Offline delivery
 
-The output is a static PWA deployable to GitHub Pages under a configurable repository base path. The service worker caches same-origin versioned application assets and built-in case resources. A successful initial visit enables later offline use. Update handling prevents incompatible asset versions from being silently mixed and offers a controlled refresh.
+The output is a static PWA deployable to GitHub Pages under a configurable repository base path. The service worker caches same-origin versioned application assets and built-in case resources. A successful initial visit enables later offline use. There is no runtime API dependency. Update handling prevents incompatible asset versions from being silently mixed and offers a controlled refresh.
 
 ## Failure handling
 
-The application shell handles boot and routing failures. Each case has a local error boundary so one failure cannot break the library or other cases. Invalid external URL values do not reach mathematical logic unchecked. Recovery UI is in Chinese and offers retry when meaningful, reset to defaults, or return to the library. Never silently display a mathematically misleading fallback.
+The application shell handles boot and routing failures. Each case has a local error boundary so one failure cannot break the library or other cases. Invalid external URL values do not reach mathematical logic unchecked. Recovery UI is in Chinese and offers retry when meaningful, reset to defaults, or return to the library. Offline recovery distinguishes a resource that was never cached from a case runtime failure. Never silently display a mathematically misleading fallback or expose stack traces to teachers.
 
 ## Accessibility and classroom visibility
 
