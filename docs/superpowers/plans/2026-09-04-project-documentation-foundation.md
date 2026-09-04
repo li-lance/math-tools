@@ -18,7 +18,7 @@
 - The first release requires no account or backend and collects no usage analytics, cookies, or student data.
 - The first release uses simplified Chinese and general mainland-China primary-school mathematics terminology.
 - Pointer and touch are first-class inputs; keyboard access is required for key actions.
-- Cases may not directly access the network, routing, global state, browser persistence, or the service worker.
+- Cases may not directly access the network, routing, global state, browser persistence, or the service worker, including reads or writes; they must use typed application-owned interfaces for permitted behavior.
 - Do not claim that pnpm application commands work before the application scaffold exists.
 - Preserve the existing Issue tracker, Triage labels, and Domain docs sections in `AGENTS.md`.
 - Preserve `CLAUDE.md` as a symbolic link to `AGENTS.md`.
@@ -206,7 +206,7 @@ src/
 
 The registry loads lightweight metadata eagerly and dynamically imports a case runtime only after its route is selected. A case definition owns its stable identifier, route metadata, classification, teaching objective, guidance, validated defaults, URL codec, declared capabilities, lazy component entry point, and teaching-review criteria.
 
-Cases own their mathematical logic and rendering. They do not import other cases. They do not directly mutate routing, global application state, browser persistence, or the service worker, and they do not make network requests. Application-owned typed interfaces provide permitted shell behavior.
+Cases own their mathematical logic and rendering. They do not import other cases. They may not directly access routing, global application state, browser persistence, or the service worker, including reads or writes, and they do not make network requests. They request permitted shell behavior through typed application-owned interfaces.
 
 ## Rendering choices
 
@@ -368,7 +368,7 @@ pnpm test:e2e
 - Introduce a shared abstraction only after multiple real cases demonstrate the same stable need.
 - Preserve the modular-monolith dependency direction documented in `docs/architecture.md`.
 - Keep simplified-Chinese interface copy and classification terms in `src/content/`, not scattered through application components.
-- Cases must not directly access the network, router, global state, browser persistence, or service worker.
+- Cases must not directly access the network, router, global state, browser persistence, or service worker, including reads or writes; they must use typed application-owned interfaces for permitted behavior.
 - Design key interactions for pointer, touch, and keyboard. Do not use color as the only carrier of mathematical meaning.
 - Prefer mathematical clarity and classroom readability over decorative effects.
 

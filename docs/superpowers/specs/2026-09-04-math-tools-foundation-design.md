@@ -104,7 +104,7 @@ The presentation data flow is:
 
 Opening the same supported URL reproduces the same teaching state, excluding explicitly ephemeral state. Every case offers a reset action that restores its documented defaults. Unknown case identifiers and unrecoverable parameter states show a Chinese recovery screen with routes back to the library or defaults.
 
-No case may directly mutate routing, global application state, browser persistence, or the service worker. It requests those behaviors through typed application-owned interfaces. Cases may not make network requests.
+No case may directly access routing, global application state, browser persistence, or the service worker, including reads or writes. It requests those behaviors through typed application-owned interfaces. Cases may not make network requests.
 
 ## Offline and deployment
 

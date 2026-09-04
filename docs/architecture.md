@@ -26,7 +26,7 @@ src/
 
 The registry loads lightweight metadata eagerly and dynamically imports a case runtime only after its route is selected. A case definition owns its stable identifier, route metadata, classification, teaching objective, guidance, validated defaults, URL codec, declared capabilities, lazy component entry point, and teaching-review criteria.
 
-Cases own their mathematical logic and rendering. They do not import other cases. They do not directly mutate routing, global application state, browser persistence, or the service worker, and they do not make network requests. Application-owned typed interfaces provide permitted shell behavior.
+Cases own their mathematical logic and rendering. They do not import other cases. They may not directly access routing, global application state, browser persistence, or the service worker, including reads or writes, and they do not make network requests. They request permitted shell behavior through typed application-owned interfaces.
 
 ## Rendering choices
 
