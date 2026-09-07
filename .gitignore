@@ -1,1 +1,9 @@
 .worktrees/
+node_modules/
+dist/
+dist-ssr/
+*.local
+.playwright/
+test-results/
+playwright-report/
+.DS_Store

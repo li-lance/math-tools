@@ -6,7 +6,9 @@ Math Tools is a simplified-Chinese, browser-based collection of interactive demo
 
 The repository is establishing its first-release foundation. Prefer the simplest design that supports the three representative cases. Do not add foundations for accounts, classroom synchronization, analytics, AI generation, a general editor, or a universal visualization DSL.
 
-## Intended repository layout
+## Repository layout
+
+Directories are created when their first real occupant arrives; `src/visualization/` stays empty until a second case proves a shared visual need.
 
 ```text
 src/app/             application bootstrap, routing, and global recovery
@@ -22,9 +24,9 @@ docs/architecture.md current system architecture
 docs/adr/             durable architecture decisions
 ```
 
-## Intended commands
+## Commands
 
-These commands are the required top-level contract once the application scaffold exists. Do not report them as available before `package.json` defines them.
+These commands are defined in `package.json` and must keep working. Do not claim a command passed unless it was run in the current turn.
 
 ```sh
 pnpm install
@@ -36,9 +38,11 @@ pnpm build
 pnpm test:e2e
 ```
 
+`pnpm test:e2e` requires Playwright browsers: run `pnpm exec playwright install chromium` once per machine.
+
 ## Engineering rules
 
-- Pin the stable Node LTS selected during application scaffolding. Do not claim a version before it is selected.
+- Node 24 LTS is pinned in `.nvmrc` and the `engines` field of `package.json`.
 - Use TypeScript strict mode. Avoid `any`; validate data at URL, persistence, and other untyped boundaries.
 - Keep mathematical logic independent of React and rendering wherever practical.
 - Use SVG for ordinary 2D diagrams, Canvas for dense continuous drawing, and React Three Fiber for Three.js scenes.
@@ -48,6 +52,7 @@ pnpm test:e2e
 - Cases do not make network requests.
 - Cases may not directly access the router or routing, global state, browser persistence, or service worker, including reads or writes. Permitted shell behavior uses typed application-owned interfaces.
 - Design key interactions for pointer, touch, and keyboard. Do not use color as the only carrier of mathematical meaning.
+- Follow the project-wide UI style in `docs/ui-guidelines.md`; visual values live in `src/styles/tokens.css`.
 - Prefer mathematical clarity and classroom readability over decorative effects.
 
 ## Case changes
@@ -62,6 +67,7 @@ Run checks that match the changed surface. Documentation-only changes require `g
 
 - Domain language, users, product rules, and non-goals belong in `CONTEXT.md`.
 - Current module ownership and data flow belong in `docs/architecture.md`.
+- The UI style guide belongs in `docs/ui-guidelines.md`; token values in `src/styles/tokens.css`.
 - Long-lived architecture decisions belong in `docs/adr/`.
 - Update affected documentation in the same change as behavior.
 - Documentation describes current facts and durable rationale, not the discussion that produced them.

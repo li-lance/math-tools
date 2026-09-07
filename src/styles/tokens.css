@@ -1,0 +1,46 @@
+/**
+ * 设计令牌 —— 全项目唯一的视觉事实来源。
+ * 风格定位与使用规则见 docs/ui-guidelines.md。
+ */
+:root {
+  /* 色彩 */
+  --color-bg: #f6f8fb; /* 页面背景：极浅蓝灰，衬托白色卡片 */
+  --color-surface: #ffffff;
+  --color-text: #111827;
+  --color-text-secondary: #4b5563;
+  --color-primary: #2563eb; /* 主色：深蓝，仅用于可操作元素与关键数值 */
+  --color-primary-hover: #1d4ed8;
+  --color-primary-active: #1e40af;
+  --color-primary-soft: #eff4ff; /* 浅蓝底：标签、提示 */
+  --color-border: #d8dfe9;
+  --color-focus: #f59e0b; /* 焦点环：琥珀色，与主色明确区分 */
+  --color-danger: #b91c1c;
+  --color-danger-soft: #fef2f2;
+  --color-axis: #334155; /* 数轴与图形的中性深色 */
+
+  /* 字号（课堂投影可读性优先） */
+  --font-size-sm: 1rem;
+  --font-size-body: 1.25rem;
+  --font-size-lg: 1.5rem;
+  --font-size-title: 2.25rem;
+
+  /* 间距（4px 基数） */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* 圆角与阴影 */
+  --radius-sm: 0.5rem;
+  --radius: 0.75rem;
+  --radius-lg: 1rem;
+  --shadow-card:
+    0 1px 2px rgb(16 24 40 / 0.06),
+    0 4px 12px rgb(16 24 40 / 0.08);
+  --shadow-pop: 0 8px 24px rgb(16 24 40 / 0.16);
+
+  /* 触控目标（教学大屏指点） */
+  --touch-target: 3rem;
+}

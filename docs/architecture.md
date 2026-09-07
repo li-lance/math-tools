@@ -26,7 +26,7 @@ src/
 
 ## Case extension point
 
-The registry loads lightweight metadata eagerly and dynamically imports a case runtime only after its route is selected. A case definition owns its stable identifier, route metadata, classification, teaching objective, guidance, validated defaults, URL codec, declared capabilities, lazy component entry point, and teaching-review criteria.
+The registry loads lightweight metadata eagerly. A case definition owns its stable identifier, route metadata, classification, teaching objective, guidance, validated defaults, URL codec, declared capabilities, runtime component entry point, and teaching-review criteria. The runtime is a `React.lazy` wrapper created at module scope in the case definition, so metadata stays in the main bundle while the runtime code splits into its own chunk and loads only after its route is selected.
 
 Cases own their mathematical logic and rendering. They do not import other cases. They may not directly access routing, global application state, browser persistence, or the service worker, including reads or writes, and they do not make network requests. They request permitted shell behavior through typed application-owned interfaces.
 
@@ -50,6 +50,8 @@ Ephemeral state stays in the case. Device preferences go through the application
 The stage occupies most of the viewport. A touch-friendly bottom bar provides back, reset, full-screen, help, and case controls and can be collapsed or restored by pointer, touch, or keyboard. Advanced parameters use an expandable panel. Three-dimensional cases provide a reset-view action and constrain camera freedom when necessary for the teaching objective.
 
 ## Offline delivery
+
+**Not yet implemented** — the service worker, offline caching, and GitHub Pages deployment are deferred to the fourth milestone deliverable. The target design follows.
 
 The output is a static PWA deployable to GitHub Pages under a configurable repository base path. The service worker caches same-origin versioned application assets and built-in case resources. A successful initial visit enables later offline use. There is no runtime API dependency. Update handling prevents incompatible asset versions from being silently mixed and offers a controlled refresh.
 
