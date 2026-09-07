@@ -58,4 +58,4 @@
 
 ## 变更流程
 
-视觉变化影响稳定关键场景时，更新对应的 Playwright 截图基线（`pnpm test:e2e -- --update-snapshots`，基线按操作系统生成，需在 macOS 上更新），并在提交信息中说明视觉意图。
+视觉变化影响稳定关键场景时，更新对应的 Playwright 截图基线（`pnpm exec playwright test --update-snapshots`，基线按操作系统生成，需在 macOS 上更新），并在提交信息中说明视觉意图。

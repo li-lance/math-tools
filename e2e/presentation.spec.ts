@@ -2,7 +2,11 @@ import { expect, test } from '@playwright/test';
 
 test('案例库 → 详情 → 演示的完整链路', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: '查看详情' }).click();
+  await page
+    .getByRole('listitem')
+    .filter({ hasText: '可拖动数轴' })
+    .getByRole('link', { name: '查看详情' })
+    .click();
   await expect(page).toHaveURL(/\/cases\/number-line$/);
   await expect(page.getByRole('heading', { name: '可拖动数轴' })).toBeVisible();
 

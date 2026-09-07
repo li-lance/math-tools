@@ -1,5 +1,6 @@
 import { registerCase } from '../core/cases';
 
+import { cubeNetDefinition } from './cube-net';
 import { numberLineDefinition } from './number-line';
 
 let registered = false;
@@ -9,4 +10,5 @@ export function registerBuiltinCases(): void {
   if (registered) return;
   registered = true;
   registerCase(numberLineDefinition);
+  registerCase(cubeNetDefinition);
 }
