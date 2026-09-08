@@ -1,8 +1,12 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { readSolidSceneStyle, solidSceneTokenSchema } from './scene-style';
 
 describe('组合体场景样式', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('所有三维视觉值均由 --viz-3d-* token 提供', () => {
     expect(Object.values(solidSceneTokenSchema).every(({ name }) => name.startsWith('--viz-3d-'))).toBe(true);
     expect(Object.keys(solidSceneTokenSchema)).toEqual([
@@ -25,6 +29,5 @@ describe('组合体场景样式', () => {
     expect(style.cubeReference).toBe('#abc');
     expect(style.materialRoughness).toBe(1);
     expect(window.getComputedStyle).toHaveBeenCalledOnce();
-    vi.restoreAllMocks();
   });
 });

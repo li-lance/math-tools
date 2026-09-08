@@ -53,13 +53,17 @@ describe('组合体找不同', () => {
     expect(screen.getByRole('status')).toHaveTextContent('再想想');
   });
 
-  it('方向键在选项间移动焦点', () => {
+  it('方向键改变选中项并移动焦点', () => {
     renderCase();
     optionButton('A').focus();
     fireEvent.keyDown(optionButton('A'), { key: 'ArrowRight' });
     expect(optionButton('B')).toHaveFocus();
+    expect(optionButton('B')).toHaveAttribute('aria-checked', 'true');
+    expect(optionButton('A')).toHaveAttribute('aria-checked', 'false');
     fireEvent.keyDown(optionButton('B'), { key: 'ArrowDown' });
     expect(optionButton('D')).toHaveFocus();
+    expect(optionButton('D')).toHaveAttribute('aria-checked', 'true');
+    expect(optionButton('B')).toHaveAttribute('aria-checked', 'false');
   });
 
   it('显示答案标出不同项', () => {

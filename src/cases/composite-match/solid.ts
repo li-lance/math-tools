@@ -79,7 +79,7 @@ export function areCongruent(a: Solid, b: Solid): boolean {
 
 /** 对组合体应用第 index 个保向旋转并重新归一化（用于展示不同朝向的同构体）。 */
 export function rotateSolid(solid: Solid, index: number): Solid {
-  const r = ROTATIONS[index % ROTATION_COUNT]!;
+  const r = ROTATIONS[((index % ROTATION_COUNT) + ROTATION_COUNT) % ROTATION_COUNT]!;
   return normalize(solid.map((c) => rotate(c, r)));
 }
 

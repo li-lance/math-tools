@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
+import { useMemo, useRef, useState, type ChangeEvent, type KeyboardEvent } from 'react';
 
 import type { CaseRuntimeProps } from '../../core/cases';
 import { copy } from '../../content/zh-CN';
@@ -13,6 +13,10 @@ const text = copy.compositeMatch;
 const OPTION_LETTERS = ['A', 'B', 'C', 'D'] as const;
 const LEVELS: Level[] = [1, 2, 3];
 
+function isLevel(value: number): value is Level {
+  return value === 1 || value === 2 || value === 3;
+}
+
 export default function CompositeMatchCase({ state, onStateChange }: CaseRuntimeProps<CompositeState>) {
   const [selected, setSelected] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -24,13 +28,15 @@ export default function CompositeMatchCase({ state, onStateChange }: CaseRuntime
 
   const isCorrect = selected !== null && selected === problem.answerIndex;
 
-  function moveFocus(index: number, dx: number, dy: number) {
+  function moveSelection(index: number, dx: number, dy: number) {
     const col = index % 2;
     const row = Math.floor(index / 2);
     const nc = col + dx;
     const nr = row + dy;
     if (nc < 0 || nc > 1 || nr < 0 || nr > 1) return;
-    optionRefs.current[nr * 2 + nc]?.focus();
+    const targetIndex = nr * 2 + nc;
+    setSelected(targetIndex);
+    optionRefs.current[targetIndex]?.focus();
   }
 
   function handleOptionKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
@@ -43,7 +49,15 @@ export default function CompositeMatchCase({ state, onStateChange }: CaseRuntime
     const move = moves[event.key];
     if (!move) return;
     event.preventDefault();
-    moveFocus(index, move[0], move[1]);
+    moveSelection(index, move[0], move[1]);
+  }
+
+  function handleDifficultyChange(event: ChangeEvent<HTMLSelectElement>) {
+    const level = Number(event.target.value);
+    if (!isLevel(level)) return;
+    onStateChange({ level, seed: state.seed });
+    setSelected(null);
+    setRevealed(false);
   }
 
   function newProblem() {
@@ -66,7 +80,7 @@ export default function CompositeMatchCase({ state, onStateChange }: CaseRuntime
             resetKey={resetKey}
           />
         </section>
-        <div className="composite-match__options">
+        <div className="composite-match__options" role="radiogroup" aria-label={text.prompt}>
           {problem.options.map((option, index) => (
             <div key={index} className="composite-match__option">
               <SolidViewport
@@ -81,6 +95,7 @@ export default function CompositeMatchCase({ state, onStateChange }: CaseRuntime
                 role="radio"
                 aria-checked={selected === index}
                 aria-label={text.optionLetter(OPTION_LETTERS[index]!)}
+                tabIndex={index === (selected ?? 0) ? 0 : -1}
                 className="composite-match__option-button"
                 onClick={() => setSelected(index)}
                 onKeyDown={(event) => handleOptionKeyDown(event, index)}
@@ -104,7 +119,7 @@ export default function CompositeMatchCase({ state, onStateChange }: CaseRuntime
           {text.difficultyLabel}
           <select
             value={state.level}
-            onChange={(event) => onStateChange({ level: Number(event.target.value) as Level, seed: state.seed })}
+            onChange={handleDifficultyChange}
           >
             {LEVELS.map((level) => (
               <option key={level} value={level}>{text.difficulty[level]}</option>
