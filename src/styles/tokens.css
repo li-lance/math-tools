@@ -210,6 +210,8 @@
   --viz-3d-face-bottom: var(--color-manipulative-gold);
   --viz-3d-face-left: var(--color-manipulative-peach);
   --viz-3d-face-right: var(--color-manipulative-cyan);
+  --viz-3d-cube-reference: var(--color-manipulative-green);
+  --viz-3d-cube-option: var(--color-manipulative-blue);
   --viz-3d-light-hemisphere-sky: var(--color-light-sky);
   --viz-3d-light-hemisphere-ground: var(--color-light-ground);
   --viz-3d-light-hemisphere-intensity: 2.2;
