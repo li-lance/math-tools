@@ -57,3 +57,13 @@ test('窄屏正方体默认视角', async ({ page }) => {
   await expect(page.getByText('后', { exact: true })).toBeHidden();
   await expect(page).toHaveScreenshot('cube-net-mobile.png', { animations: 'disabled', threshold: 0.05, maxDiffPixelRatio: 0.02 });
 });
+
+test('组合体找不同演示页默认状态', async ({ page }) => {
+  await page.goto('/cases/composite-match/present');
+  await expect(page.getByText('参照', { exact: true })).toBeVisible();
+  await expect(page).toHaveScreenshot('composite-match.png', {
+    animations: 'disabled',
+    threshold: 0.05,
+    maxDiffPixelRatio: 0.02,
+  });
+});
