@@ -53,6 +53,7 @@ pnpm test:e2e
 - Cases may not directly access the router or routing, global state, browser persistence, or service worker, including reads or writes. Permitted shell behavior uses typed application-owned interfaces.
 - Design key interactions for pointer, touch, and keyboard. Do not use color as the only carrier of mathematical meaning.
 - Follow the project-wide UI style in `docs/ui-guidelines.md`; visual values live in `src/styles/tokens.css`.
+- Follow `docs/design-tokens.md` for token roles and units. Components consume semantic/component tokens; Three.js uses the typed reader in `src/styles/read-tokens.ts` with a case-local schema, not duplicate color/material defaults. Geometry and camera algorithms are not design tokens.
 - Prefer mathematical clarity and classroom readability over decorative effects.
 
 ## Case changes
@@ -68,6 +69,7 @@ Run checks that match the changed surface. Documentation-only changes require `g
 - Domain language, users, product rules, and non-goals belong in `CONTEXT.md`.
 - Current module ownership and data flow belong in `docs/architecture.md`.
 - The UI style guide belongs in `docs/ui-guidelines.md`; token values in `src/styles/tokens.css`.
+- The design token contract, state roles, units, and maintenance rules belong in `docs/design-tokens.md`.
 - Long-lived architecture decisions belong in `docs/adr/`.
 - Update affected documentation in the same change as behavior.
 - Documentation describes current facts and durable rationale, not the discussion that produced them.

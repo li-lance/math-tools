@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { CaseRuntimeProps } from '../../core/cases';
 
@@ -13,15 +13,9 @@ import {
 } from './math';
 import './number-line.css';
 
-const WIDTH = 1000;
 const HEIGHT = 320;
 const AXIS_X0 = 60;
-const AXIS_X1 = 940;
 const AXIS_Y = 190;
-
-function toX(position: number): number {
-  return AXIS_X0 + position * (AXIS_X1 - AXIS_X0);
-}
 
 export default function NumberLineCase({
   state,
@@ -31,15 +25,30 @@ export default function NumberLineCase({
   // 拖动中的中间位置是瞬时状态：只在松手时提交为教学参数。
   const [dragValue, setDragValue] = useState<number | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const [width, setWidth] = useState(1000);
   const displayValue = dragValue ?? value;
+  const axisEnd = width - AXIS_X0;
+  const toX = (position: number) => AXIS_X0 + position * (axisEnd - AXIS_X0);
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(([entry]) => {
+      if (entry && entry.contentRect.width > 0) {
+        setWidth(Math.min(1000, entry.contentRect.width));
+      }
+    });
+    observer.observe(svg);
+    return () => observer.disconnect();
+  }, []);
 
   const valueFromClientX = (clientX: number): number => {
     const svg = svgRef.current;
     if (!svg) return displayValue;
     const rect = svg.getBoundingClientRect();
     if (rect.width === 0) return displayValue;
-    const x = ((clientX - rect.left) / rect.width) * WIDTH;
-    const position = (x - AXIS_X0) / (AXIS_X1 - AXIS_X0);
+    const x = ((clientX - rect.left) / rect.width) * width;
+    const position = (x - AXIS_X0) / (axisEnd - AXIS_X0);
     return clampValue(snapToInteger(positionToValue(position, min, max)), min, max);
   };
 
@@ -103,7 +112,7 @@ export default function NumberLineCase({
       <svg
         ref={svgRef}
         className="number-line__stage"
-        viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+        viewBox={`0 0 ${width} ${HEIGHT}`}
         role="img"
         aria-label={`数轴，区间从 ${min} 到 ${max}`}
         onPointerDown={handlePointerDown}
@@ -111,12 +120,12 @@ export default function NumberLineCase({
         <line
           x1={AXIS_X0}
           y1={AXIS_Y}
-          x2={AXIS_X1}
+          x2={axisEnd}
           y2={AXIS_Y}
           className="number-line__axis"
         />
         <polygon
-          points={`${AXIS_X1},${AXIS_Y} ${AXIS_X1 - 14},${AXIS_Y - 7} ${AXIS_X1 - 14},${AXIS_Y + 7}`}
+          points={`${axisEnd},${AXIS_Y} ${axisEnd - 14},${AXIS_Y - 7} ${axisEnd - 14},${AXIS_Y + 7}`}
           className="number-line__axis"
         />
         {ticks.map((tick) => {
@@ -130,9 +139,12 @@ export default function NumberLineCase({
                 y2={AXIS_Y + 8}
                 className="number-line__tick"
               />
-              <text x={x} y={AXIS_Y + 38} textAnchor="middle" className="number-line__tick-label">
-                {tick}
-              </text>
+              {(width >= 900 || tick === min || tick === max ||
+                (tick === 0 && x - AXIS_X0 >= 60 && axisEnd - x >= 60)) && (
+                <text x={x} y={AXIS_Y + 52} textAnchor="middle" className="number-line__tick-label">
+                  {tick}
+                </text>
+              )}
             </g>
           );
         })}
@@ -158,7 +170,7 @@ export default function NumberLineCase({
           <circle
             cx={toX(valueToPosition(displayValue, min, max))}
             cy={AXIS_Y}
-            r={20}
+            r={24}
             className="number-line__handle-circle"
           />
         </g>

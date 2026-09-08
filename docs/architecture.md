@@ -8,6 +8,8 @@ Math Tools is a modular React monolith with one build, router, application shell
 
 The approved tooling is TypeScript, React, Vite, pnpm, Vitest, Testing Library, Playwright, and Three.js through React Three Fiber. Application scaffolding pins a stable Node LTS.
 
+The Three.js type version is declared once in the root `pnpm-workspace.yaml` catalog. The root dev dependency and a graph-wide override use that catalog so renderer, helpers, and application exchange the same `Vector3`, `Object3D`, and camera types. The override removes the older types pulled by drei's `stats-gl` dependency; it does not change the Three.js runtime. When upgrading Three.js, update the catalog to the matching release line and run `pnpm why @types/three` plus `pnpm typecheck`. `src/test/three-types.typecheck.ts` checks camera and HTML-occlusion type boundaries during typecheck.
+
 ## Source layout
 
 ```text
@@ -33,6 +35,8 @@ Cases own their mathematical logic and rendering. They do not import other cases
 ## Rendering choices
 
 Use SVG for ordinary 2D diagrams, Canvas for dense continuous drawing, and Three.js through React Three Fiber for 3D scenes. Share coordinates, labels, colors, gestures, or controls only after multiple real cases establish a stable common need. Do not force SVG, Canvas, and Three.js behind one rendering abstraction.
+
+Visual values are owned by `src/styles/tokens.css`, with foundation, semantic, and component roles documented in [design-tokens.md](design-tokens.md). CSS/SVG consume custom properties directly. `src/styles/read-tokens.ts` is a small typed, validated CSS-value reader, independent of React and Three.js. A case-local `scene-style.ts` maps these values to its rendering properties at mount time; it contains names and validation ranges, not duplicate defaults. Mathematical geometry, camera algorithms, render ordering, and topology remain case-owned. There is no runtime theme subscription or shared scene framework.
 
 ## Presentation state flow
 

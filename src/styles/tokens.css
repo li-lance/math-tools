@@ -1,46 +1,235 @@
-/**
- * 设计令牌 —— 全项目唯一的视觉事实来源。
- * 风格定位与使用规则见 docs/ui-guidelines.md。
- */
+/** 全项目视觉取值唯一来源。分层、单位与维护规则见 docs/design-tokens.md。 */
 :root {
-  /* 色彩 */
-  --color-bg: #f6f8fb; /* 页面背景：极浅蓝灰，衬托白色卡片 */
-  --color-surface: #ffffff;
-  --color-text: #111827;
-  --color-text-secondary: #4b5563;
-  --color-primary: #2563eb; /* 主色：深蓝，仅用于可操作元素与关键数值 */
-  --color-primary-hover: #1d4ed8;
-  --color-primary-active: #1e40af;
-  --color-primary-soft: #eff4ff; /* 浅蓝底：标签、提示 */
-  --color-border: #d8dfe9;
-  --color-focus: #f59e0b; /* 焦点环：琥珀色，与主色明确区分 */
-  --color-danger: #b91c1c;
-  --color-danger-soft: #fef2f2;
-  --color-axis: #334155; /* 数轴与图形的中性深色 */
+  /* 基础色：品牌、纸张与课堂教具。 */
+  --palette-paper: #f5f0e6;
+  --palette-white: #fffdf8;
+  --palette-ink: #18304f;
+  --palette-ink-muted: #56657a;
+  --palette-coral: #df5c45;
+  --palette-coral-dark: #b84230;
+  --palette-coral-hover: #a43828;
+  --palette-coral-active: #8c2e21;
+  --palette-gold: #e7ad3c;
+  --palette-blue-soft: #dceaf0;
+  --palette-sage-soft: #dfe9df;
+  --palette-peach-soft: #f6dcc7;
+  --palette-lilac-soft: #e6deed;
+  --palette-stage: #fffefa;
+  --palette-white-pure: #ffffff;
+  --palette-coral-soft: #f9e8df;
+  --palette-sand: #ded4c2;
+  --palette-sand-dark: #9b8f7a;
+  --palette-purple: #803474;
+  --palette-red: #a42528;
+  --palette-red-soft: #fde8e5;
+  --palette-grid-minor: #d2d9d4;
+  --palette-grid-major: #a6b5ac;
+  --palette-art-peach: #efaa85;
+  --palette-art-gold: #fff1cb;
+  --palette-art-sage: #d5e1d5;
+  --palette-manipulative-blue: #a8c9ed;
+  --palette-manipulative-purple: #c5b5e6;
+  --palette-manipulative-green: #b6d9b6;
+  --palette-manipulative-gold: #edcf8c;
+  --palette-manipulative-peach: #edb5a9;
+  --palette-manipulative-cyan: #9dced9;
+  --palette-slate: #334155;
+  --palette-ground: #b8b3a8;
 
-  /* 字号（课堂投影可读性优先） */
+  /* 语义色：组件消费用途明确的变量。 */
+  --color-bg: var(--palette-paper);
+  --color-surface: var(--palette-white);
+  --color-stage: var(--palette-stage);
+  --color-text: var(--palette-ink);
+  --color-text-secondary: var(--palette-ink-muted);
+  --color-primary: var(--palette-coral-dark);
+  --color-primary-hover: var(--palette-coral-hover);
+  --color-primary-active: var(--palette-coral-active);
+  --color-on-primary: var(--palette-white-pure);
+  --color-primary-soft: var(--palette-coral-soft);
+  --color-accent: var(--palette-coral);
+  --color-border: var(--palette-sand);
+  --color-border-strong: var(--palette-sand-dark);
+  --color-focus: var(--palette-purple);
+  --color-danger: var(--palette-red);
+  --color-danger-soft: var(--palette-red-soft);
+  --color-brand-mark: var(--palette-gold);
+  --color-axis: var(--palette-ink);
+  --color-on-ink: var(--palette-white);
+  --color-grid: rgb(24 48 79 / 0.06);
+  --color-overlay: rgb(24 48 79 / 0.45);
+  --color-label-bg: rgb(255 253 248 / 0.94);
+  --color-3d-grid-minor: var(--palette-grid-minor);
+  --color-3d-grid-major: var(--palette-grid-major);
+  --color-geometry-surface: var(--palette-peach-soft);
+  --color-number-surface: var(--palette-blue-soft);
+  --color-art-front: var(--palette-art-peach);
+  --color-art-top: var(--palette-art-gold);
+  --color-art-side: var(--palette-art-sage);
+  --color-manipulative-blue: var(--palette-manipulative-blue);
+  --color-manipulative-purple: var(--palette-manipulative-purple);
+  --color-manipulative-green: var(--palette-manipulative-green);
+  --color-manipulative-gold: var(--palette-manipulative-gold);
+  --color-manipulative-peach: var(--palette-manipulative-peach);
+  --color-manipulative-cyan: var(--palette-manipulative-cyan);
+  --color-solid-edge: var(--palette-slate);
+  --color-light-sky: var(--palette-white);
+  --color-light-ground: var(--palette-ground);
+  --color-light-directional: var(--palette-white-pure);
+
+  /* 排版：使用本地字体，无网络字体依赖。 */
+  --font-body: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  --font-heading: ui-rounded, 'SF Pro Rounded', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   --font-size-sm: 1rem;
-  --font-size-body: 1.25rem;
+  --font-size-body: 1.125rem;
+  --font-size-control: 1.125rem;
   --font-size-lg: 1.5rem;
-  --font-size-title: 2.25rem;
+  --font-size-title: clamp(2rem, 3vw, 2.75rem);
+  --font-size-hero: clamp(2.25rem, 4.2vw, 3.75rem);
+  --font-size-tick: 26px;
+  --font-size-value: 44px;
+  --line-height-body: 1.7;
+  --line-height-heading: 1.25;
+  --weight-normal: 400;
+  --weight-medium: 600;
+  --weight-bold: 700;
+  --weight-display: 800;
+  --letter-spacing-brand: -0.04em;
+  --letter-spacing-hero: -0.045em;
 
-  /* 间距（4px 基数） */
+  /* 间距：4px 基数。 */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
+  --space-5: 1.25rem;
   --space-6: 1.5rem;
   --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
 
-  /* 圆角与阴影 */
+  /* 形状、层级与动效。 */
   --radius-sm: 0.5rem;
   --radius: 0.75rem;
-  --radius-lg: 1rem;
-  --shadow-card:
-    0 1px 2px rgb(16 24 40 / 0.06),
-    0 4px 12px rgb(16 24 40 / 0.08);
-  --shadow-pop: 0 8px 24px rgb(16 24 40 / 0.16);
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-pill: 999px;
+  --border-width: 1px;
+  --border-strong: 2px;
+  --focus-width: 3px;
+  --shadow-card: 0 3px 0 rgb(77 60 36 / 0.04), 0 8px 24px rgb(77 60 36 / 0.04);
+  --shadow-pop: 0 12px 36px rgb(77 60 36 / 0.13);
+  --shadow-button: 0 3px 0 var(--palette-coral-active);
+  --shadow-tray: 0 -4px 24px rgb(77 60 36 / 0.04);
+  --motion-feedback: 140ms;
+  --motion-reduced: 0.01ms;
+  --ease-feedback: ease-out;
+  --z-floating: 30;
+  --opacity-disabled: 0.5;
 
-  /* 触控目标（教学大屏指点） */
+  /* 组件尺寸。响应式断点由 global.css 统一维护。 */
   --touch-target: 3rem;
+  --page-width: 76rem;
+  --stage-width: 76rem;
+  --page-gutter: clamp(1rem, 4vw, 3rem);
+  --preview-height: 15rem;
+  --brand-size: 2.75rem;
+  --art-grid-size: 1.5rem;
+
+  /* 尺寸角色：CSS 长度。媒体查询固定在 600 / 900px，不能用 var()。 */
+  --size-canvas-2d: 1100px;
+  --size-canvas-3d: 1000px;
+  --size-canvas-2d-mobile-min: 15rem;
+  --size-canvas-3d-mobile-min: 18rem;
+  --size-search-min: 14rem;
+  --size-description-max: 32em;
+  --size-card-description-min: 3.4em;
+  --size-artwork-max: 30rem;
+  --size-detail-preview: 21rem;
+  --size-detail-preview-mobile: var(--preview-height);
+  --size-dialog-max: 36rem;
+  --size-slider-min: 5rem;
+  --size-value-output: 3.5em;
+  --size-number-input: 7em;
+
+  /* 控件：状态语义保持当前外观；focus 可与任何 enabled 状态叠加。 */
+  --control-height: var(--touch-target);
+  --control-radius: var(--radius);
+  --control-padding-block: var(--space-2);
+  --control-padding-inline: var(--space-5);
+  --control-surface: var(--color-surface);
+  --control-text: var(--color-text);
+  --control-border: var(--color-border-strong);
+  --control-hover-surface: var(--color-primary-soft);
+  --control-hover-border: var(--color-primary);
+  --control-selected-surface: var(--color-primary-soft);
+  --control-selected-text: var(--color-primary);
+  --control-selected-border: var(--color-primary);
+  --control-disabled-opacity: var(--opacity-disabled);
+  --control-focus-color: var(--color-focus);
+  --control-focus-width: var(--focus-width);
+  --control-focus-offset: var(--space-1);
+  --control-primary-surface: var(--color-primary);
+  --control-primary-text: var(--color-on-primary);
+  --control-primary-hover: var(--color-primary-hover);
+  --control-primary-active: var(--color-primary-active);
+  --control-primary-shadow: var(--shadow-button);
+  --control-feedback-duration: var(--motion-feedback);
+  --control-feedback-easing: var(--ease-feedback);
+  --input-padding-inline: var(--space-3);
+  --input-placeholder-color: var(--color-text-secondary);
+  --input-focus-border: var(--color-primary);
+
+  /* 卡片与舞台：共享结构，不按页面复制色板。 */
+  --card-surface: var(--color-surface);
+  --card-border: var(--color-border);
+  --card-radius: var(--radius-lg);
+  --card-shadow: var(--shadow-card);
+  --card-hover-shadow: var(--shadow-pop);
+  --stage-surface: var(--color-stage);
+  --stage-radius: var(--radius-xl);
+  --stage-shadow: var(--shadow-card);
+  --stage-padding: var(--space-6);
+
+  /* 二维描边为 SVG 用户单位，不是布局 px。 */
+  --viz-axis-width: 3;
+  --viz-tick-width: 2;
+  --viz-handle-outline-width: 4;
+  --viz-handle-focus-width: 6;
+  --viz-art-line-width: 2;
+  --viz-art-solid-width: 2.5;
+  --viz-icon-line-width: 1.75;
+  --viz-brand-line-width: 3;
+  --viz-art-grid-dot-size: 1px;
+
+  /* 三维教具：颜色不替代面身份；映射由案例负责。 */
+  --viz-3d-face-front: var(--color-manipulative-blue);
+  --viz-3d-face-back: var(--color-manipulative-purple);
+  --viz-3d-face-top: var(--color-manipulative-green);
+  --viz-3d-face-bottom: var(--color-manipulative-gold);
+  --viz-3d-face-left: var(--color-manipulative-peach);
+  --viz-3d-face-right: var(--color-manipulative-cyan);
+  --viz-3d-light-hemisphere-sky: var(--color-light-sky);
+  --viz-3d-light-hemisphere-ground: var(--color-light-ground);
+  --viz-3d-light-hemisphere-intensity: 2.2;
+  --viz-3d-light-directional-color: var(--color-light-directional);
+  --viz-3d-light-directional-intensity: 2.5;
+  --viz-3d-material-roughness: 0.8;
+  --viz-3d-material-opacity: 0.28;
+  --viz-3d-grid-minor: var(--color-3d-grid-minor);
+  --viz-3d-grid-major: var(--color-3d-grid-major);
+  --viz-3d-grid-cell-thickness: 0.65;
+  --viz-3d-grid-section-thickness: 1;
+  --viz-3d-grid-fade-distance: 10;
+  --viz-3d-grid-fade-strength: 1.7;
+  --viz-3d-edge-color: var(--color-solid-edge);
+  --viz-3d-edge-hidden-width: 1.2;
+  --viz-3d-edge-hidden-opacity: 0.48;
+  --viz-3d-edge-hidden-dash-size: 0.06;
+  --viz-3d-edge-hidden-gap-size: 0.045;
+  --viz-3d-edge-visible-width: 1.7;
+  --viz-3d-edge-visible-opacity: 1;
+  --viz-3d-label-z-index-max: 10;
+  --viz-3d-label-z-index-min: 0;
 }

@@ -9,27 +9,41 @@
 .cube-net__viewport {
   position: relative;
   width: 100%;
-  max-width: 1000px;
-  aspect-ratio: 16 / 9;
-  background: var(--color-bg);
+  max-width: var(--size-canvas-3d);
+  aspect-ratio: 20 / 9;
+  background: var(--color-stage);
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 .cube-net__face-label {
   font-size: var(--font-size-lg);
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   color: var(--color-text);
-  background: rgb(255 255 255 / 0.75);
-  border-radius: 999px;
+  background: var(--color-label-bg);
+  border-radius: var(--radius-pill);
   padding: 0 var(--space-2);
 }
 
-.cube-net__reset-view {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
-  box-shadow: var(--shadow-card);
+.cube-net__view-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: var(--size-canvas-3d);
+}
+
+.cube-net__view-tools > div { display: flex; gap: var(--space-2); }
+.cube-net__view-tools p, .cube-net__grid-hint {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+.cube-net__view-tools button[aria-pressed='true'] {
+  background: var(--control-selected-surface);
+  border-color: var(--control-selected-border);
+  color: var(--control-selected-text);
 }
 
 .cube-net__controls {
@@ -38,22 +52,34 @@
   align-items: center;
   gap: var(--space-4);
   width: 100%;
-  max-width: 1000px;
+  max-width: var(--size-canvas-3d);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius);
 }
 
 .cube-net__controls label {
   flex: 1;
-  min-width: 16rem;
+  min-width: 0;
+  flex-wrap: wrap;
 }
 
 .cube-net__controls input[type='range'] {
   flex: 1;
+  min-width: var(--size-slider-min);
   accent-color: var(--color-primary);
 }
 
+@media (max-width: 600px) {
+  .cube-net__viewport { min-height: var(--size-canvas-3d-mobile-min); }
+  .cube-net__controls { gap: var(--space-2); }
+  .cube-net__controls label { flex-basis: 100%; }
+}
+
 .cube-net__unfold-value {
-  font-weight: 700;
+  font-weight: var(--weight-bold);
   color: var(--color-primary);
-  min-width: 3.5em;
+  min-width: var(--size-value-output);
   text-align: right;
 }

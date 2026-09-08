@@ -1,0 +1,6 @@
+# 与 three@0.185.x 配套；根包与传递依赖共享同一套类型。
+catalog:
+  '@types/three': 0.185.4
+
+overrides:
+  '@types/three': 'catalog:'

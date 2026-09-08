@@ -49,8 +49,12 @@ function PresentationShell({ definition }: { definition: AnyCaseDefinition }) {
 
   return (
     <div className="presentation">
+      <header className="presentation__header">
+        <strong>{copy.brand.name} · {copy.presentation.mode}</strong>
+        <span>{copy.presentation.hint}</span>
+      </header>
       <div className="presentation__stage">
-        <div style={{ width: '100%' }}>
+        <div className="presentation__canvas">
           {issues.length > 0 && (
             <p className="notice" role="status">
               {copy.presentation.repairedNotice([...issues])}
@@ -78,21 +82,23 @@ function PresentationShell({ definition }: { definition: AnyCaseDefinition }) {
       ) : (
         <div className="presentation__bar">
           <span className="presentation__bar-title">{definition.title}</span>
-          <Link className="button" to={`/cases/${definition.id}`}>
-            {copy.presentation.back}
-          </Link>
-          <button type="button" onClick={() => handleStateChange(definition.defaultState)}>
-            {copy.presentation.reset}
-          </button>
-          <button type="button" onClick={toggleFullscreen}>
-            {isFullscreen ? copy.presentation.exitFullscreen : copy.presentation.fullscreen}
-          </button>
-          <button type="button" onClick={() => helpRef.current?.showModal()}>
-            {copy.presentation.help}
-          </button>
-          <button type="button" onClick={() => setBarCollapsed(true)}>
-            {copy.presentation.collapseBar}
-          </button>
+          <div className="presentation__actions">
+            <Link className="button" to={`/cases/${definition.id}`}>
+              {copy.presentation.back}
+            </Link>
+            <button type="button" onClick={() => handleStateChange(definition.defaultState)}>
+              {copy.presentation.reset}
+            </button>
+            <button type="button" className="primary" onClick={toggleFullscreen}>
+              {isFullscreen ? copy.presentation.exitFullscreen : copy.presentation.fullscreen}
+            </button>
+            <button type="button" onClick={() => helpRef.current?.showModal()}>
+              {copy.presentation.help}
+            </button>
+            <button type="button" onClick={() => setBarCollapsed(true)}>
+              {copy.presentation.collapseBar}
+            </button>
+          </div>
         </div>
       )}
 
