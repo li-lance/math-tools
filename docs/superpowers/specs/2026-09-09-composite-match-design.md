@@ -37,8 +37,10 @@ interface CompositeState {
 ```
 
 - `level` selects the generation difficulty (see cube-count ranges below).
-- `seed` is optional on first load: when absent the codec picks a random seed; when present the
-  exact problem is reproducible. Encoding always writes `seed`, so a shared link locks one problem.
+- `seed` is optional on first load: when absent it falls back to the fixed default `1`, so a fresh
+  visitor always sees the same default problem. `换一题` draws a new random seed for variety, which
+  is then URL-encoded. A present `seed` always reproduces the exact problem, so a shared link locks
+  one problem. `encode` omits parameters equal to their default (the `CubeNetState` codec pattern).
 - Invalid or out-of-range values are clamped or replaced by documented defaults, recording an
   issue message, following the existing `CubeNetState` codec pattern.
 
@@ -121,7 +123,7 @@ Self-check with a teacher-reveal mode:
 - Correct → `答对了`; incorrect → `再想想，找出与参照体不同的那个`, with retry allowed. Feedback is
   conveyed by text and icon as well as color.
 - `显示答案` (teacher mode) marks the different option.
-- `换一题` draws a new seed (`seed + 1`).
+- `换一题` draws a new random seed (which the URL then encodes).
 - `重置视角` resets all viewports; `重置` returns to defaults.
 - Viewports stay rotatable after submit so the teacher can confirm by rotation.
 
