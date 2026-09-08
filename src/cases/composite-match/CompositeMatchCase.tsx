@@ -80,6 +80,7 @@ export default function CompositeMatchCase({ state, onStateChange }: CaseRuntime
                 type="button"
                 role="radio"
                 aria-checked={selected === index}
+                aria-label={text.optionLetter(OPTION_LETTERS[index]!)}
                 className="composite-match__option-button"
                 onClick={() => setSelected(index)}
                 onKeyDown={(event) => handleOptionKeyDown(event, index)}
