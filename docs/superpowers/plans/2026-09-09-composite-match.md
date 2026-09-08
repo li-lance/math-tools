@@ -675,9 +675,9 @@ const SAMPLE: Solid = [[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1]];
 describe('三维场景取景', () => {
   it('参照体中心即包围盒中心，取景距离为正', () => {
     const { center, distance } = fitSolid(SAMPLE);
-    expect(center[0]).toBeCloseTo(0.25, 10);
-    expect(center[1]).toBeCloseTo(0.25, 10);
-    expect(center[2]).toBeCloseTo(0.25, 10);
+    expect(center[0]).toBeCloseTo(0.5, 10);
+    expect(center[1]).toBeCloseTo(0.5, 10);
+    expect(center[2]).toBeCloseTo(0.5, 10);
     expect(distance).toBeGreaterThan(0);
   });
 
