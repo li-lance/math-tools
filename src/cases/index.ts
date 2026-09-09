@@ -1,5 +1,6 @@
 import { registerCase } from '../core/cases';
 
+import { compositeMatchDefinition } from './composite-match';
 import { cubeNetDefinition } from './cube-net';
 import { numberLineDefinition } from './number-line';
 
@@ -11,4 +12,5 @@ export function registerBuiltinCases(): void {
   registered = true;
   registerCase(numberLineDefinition);
   registerCase(cubeNetDefinition);
+  registerCase(compositeMatchDefinition);
 }

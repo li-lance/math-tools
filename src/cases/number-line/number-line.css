@@ -8,30 +8,30 @@
 
 .number-line__stage {
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--size-canvas-2d);
   touch-action: none;
   user-select: none;
 }
 
 .number-line__axis {
   stroke: var(--color-axis);
-  stroke-width: 3;
+  stroke-width: var(--viz-axis-width);
   fill: var(--color-axis);
 }
 
 .number-line__tick {
   stroke: var(--color-axis);
-  stroke-width: 2;
+  stroke-width: var(--viz-tick-width);
 }
 
 .number-line__tick-label {
-  font-size: 26px;
+  font-size: var(--font-size-tick);
   fill: var(--color-text-secondary);
 }
 
 .number-line__value-label {
-  font-size: 44px;
-  font-weight: 700;
+  font-size: var(--font-size-value);
+  font-weight: var(--weight-bold);
   fill: var(--color-primary);
 }
 
@@ -43,26 +43,27 @@
 .number-line__handle-circle {
   fill: var(--color-primary);
   stroke: var(--color-surface);
-  stroke-width: 4;
+  stroke-width: var(--viz-handle-outline-width);
 }
 
 .number-line__handle:focus-visible .number-line__handle-circle {
   stroke: var(--color-focus);
-  stroke-width: 6;
+  stroke-width: var(--viz-handle-focus-width);
 }
 
 .number-line__settings {
   width: 100%;
-  max-width: 1100px;
+  max-width: var(--size-canvas-2d);
   font-size: var(--font-size-body);
-  background: var(--color-bg);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-2) var(--space-4);
 }
 
 .number-line__settings summary {
   cursor: pointer;
-  font-weight: 600;
+  font-weight: var(--weight-medium);
   padding: var(--space-2) 0;
 }
 
@@ -76,15 +77,21 @@
   display: flex;
   gap: var(--space-4);
   padding-bottom: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .number-line__field {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  font-weight: 600;
+  font-weight: var(--weight-medium);
 }
 
 .number-line__field input {
-  width: 7em;
+  width: var(--size-number-input);
+}
+
+@media (max-width: 600px) {
+  .number-line__stage { min-height: var(--size-canvas-2d-mobile-min); }
+  .number-line__settings { font-size: var(--font-size-sm); }
 }
